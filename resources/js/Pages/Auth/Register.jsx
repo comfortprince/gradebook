@@ -8,7 +8,9 @@ import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
+        schoolName: '',
         name: '',
+        surname: '',
         email: '',
         password: '',
         password_confirmation: '',
@@ -28,10 +30,27 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="School Registeration" />
 
             <form onSubmit={submit}>
                 <div>
+                    <InputLabel htmlFor="schoolName" value="School Name" />
+
+                    <TextInput
+                        id="schoolName"
+                        name="schoolName"
+                        value={data.schoolName}
+                        className="mt-1 block w-full"
+                        autoComplete="schoolName"
+                        isFocused={true}
+                        onChange={(e) => setData('schoolName', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.schoolName} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
                     <InputLabel htmlFor="name" value="Name" />
 
                     <TextInput
@@ -46,6 +65,23 @@ export default function Register() {
                     />
 
                     <InputError message={errors.name} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="surname" value="Surname" />
+
+                    <TextInput
+                        id="surname"
+                        name="surname"
+                        value={data.surname}
+                        className="mt-1 block w-full"
+                        autoComplete="surname"
+                        isFocused={true}
+                        onChange={(e) => setData('surname', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.surname} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
