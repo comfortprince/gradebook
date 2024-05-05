@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth'], function (){
             // authorize user
             // save exam
             // redirect to teacher verification page
+            return redirect(route('exams.create.teachers'));
         })->name('exams.store');
     }); 
 

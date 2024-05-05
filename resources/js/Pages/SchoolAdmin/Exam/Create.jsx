@@ -4,9 +4,20 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import InputLabel from '@/Components/InputLabel';
 import InputError from '@/Components/InputError';
 import TextInput from '@/Components/TextInput';
-import { Head } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function Create({ auth }) {
+    const { data, setData, errors, post, processing } = useForm({
+      session: '',
+      start_date: '',
+      end_date: '',
+    });
+
+    const submit = (e) => {
+      e.preventDefault();
+      post(route('admin.exams.store'));
+    }
+
     return (
       <AuthenticatedLayout
           user={auth.user}
@@ -20,7 +31,10 @@ export default function Create({ auth }) {
             </h2>
           </div>
 
-          <form className="mt-4 w-96 bg-white p-4 rounded-md shadow">
+          <form 
+            onSubmit={submit}
+            className="mt-4 w-96 bg-white p-4 rounded-md shadow"
+          >
               <div>
                   <InputLabel htmlFor="session" value="Session" />
 
@@ -31,9 +45,11 @@ export default function Create({ auth }) {
                       className="mt-1 block w-full"
                       autoComplete="username"
                       isFocused={true}
+                      value={data.session}
+                      onChange={(e) => { setData('session', e.target.value) }}
                   />
 
-                  {/*<InputError message={errors.email} className="mt-2" />*/}
+                  <InputError message={errors.session} className="mt-2" />
               </div>
 
               <div className="mt-4">
@@ -45,9 +61,11 @@ export default function Create({ auth }) {
                       name="start_date"
                       className="mt-1 block w-full"
                       autoComplete="date"
+                      value={data.start_date}
+                      onChange={(e) => { setData('start_date', e.target.value) }}
                   />
 
-                  {/*<InputError message={errors.password} className="mt-2" />*/}
+                  <InputError message={errors.start_date} className="mt-2" />
               </div>
 
               <div className="mt-4">
@@ -59,17 +77,21 @@ export default function Create({ auth }) {
                       name="end_date"
                       className="mt-1 block w-full"
                       autoComplete="date"
+                      value={data.end_date}
+                      onChange={(e) => { setData('end_date', e.target.value) }}
                   />
 
-                  {/*<InputError message={errors.password} className="mt-2" />*/}
+                  <InputError message={errors.end_date} className="mt-2" />
               </div>
 
               <div className="flex items-center justify-between mt-4">
                   <SecondaryButton>
+                    <Link href={route('admin.exams.index')}>
                       Cancel
+                    </Link>
                   </SecondaryButton>
-                  <PrimaryButton>
-                      Next
+                  <PrimaryButton type="submit" disabled={processing}>
+                    Next
                   </PrimaryButton>
               </div>
 
