@@ -22,8 +22,8 @@ class ExamController extends Controller
      */
     public function create()
     {
-        // return Inertia::render('SchoolAdmin/Exam/EditClass');
-        return Inertia::render('SchoolAdmin/Exam/Create');
+        return Inertia::render('SchoolAdmin/Exam/EditClass');
+        // return Inertia::render('SchoolAdmin/Exam/Create');
         // return Inertia::render('SchoolAdmin/Exam/CreateTeachers');
         // return Inertia::render('SchoolAdmin/Exam/CreateSubjects');
         // return Inertia::render('SchoolAdmin/Exam/EditClasses');

@@ -1,8 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+export default function Index({ auth, exams }) {
+    console.log(exams)
+
     return (
       <AuthenticatedLayout
           user={auth.user}
@@ -14,17 +16,37 @@ export default function Dashboard({ auth }) {
             <h2 className="text-2xl font-medium">
               Manage Exams
             </h2>
-            <PrimaryButton>New</PrimaryButton>
+            <PrimaryButton>
+              <Link
+                href={route('admin.exams.create')}
+              >
+                New
+              </Link>
+            </PrimaryButton>
           </div>
 
           <ul className="mt-4 flex flex-col gap-2">
-            <li className="text-lg">
-              Term 3 2023
-            </li>
-            <li className="text-lg">
-              Term 2 2023
-            </li>
+            {exams.map((exam) => (
+              <li key={exam.id} className="text-lg">
+                <Link href="#!" className="flex justify-between">
+                  <span>
+                    {exam.name + " " + new Date(exam.end_date).getFullYear()}
+                  </span>
+                  
+                  {!exam.registered && 
+                    <span className="text-white bg-red-600 rounded p-1 px-2 text-sm">
+                      Complete Exam Registeration
+                    </span>
+                  }
 
+                  {exam.registered && exam.results_pending && 
+                    <span className="text-white bg-blue-600 rounded p-1 px-2 text-sm">
+                      Results Pending
+                    </span>
+                  }
+                </Link>
+              </li>
+            ))}
           </ul>          
         </div>
       </AuthenticatedLayout>
