@@ -60,14 +60,75 @@ Route::group(['middleware' => 'auth'], function (){
             return Inertia::render('SchoolAdmin/Exam/Create');
         })->name('exams.create');
 
-        // Store a newly created resource in storage.
+        // Store a newly created exam.
         Route::post('/exam/store', function (Request $request){
             // validate data
             // authorize user
             // save exam
             // redirect to teacher verification page
-            return redirect(route('exams.create.teachers'));
+            return redirect(route('admin.exams.create.teachers'));
         })->name('exams.store');
+
+        // Show the page for verifying teacher data.
+        Route::get('/exam/create/teachers', function (Request $request){
+            $teachers = [
+                'teachers' => [
+                    [
+                        'id' => '1',
+                        'name' => 'Peter',
+                        'surname' => 'Hluyo',
+                        'email' => 'hluyo@gmail.com',
+                        'classTeacher' => '1A',
+                        'subjects' => [
+                            [
+                                'id' => '1',
+                                'name' => 'Computer Science'
+                            ]
+                        ]
+                    ],
+                    [
+                        'id' => '2',
+                        'name' => 'John',
+                        'surname' => 'Musademba',
+                        'email' => 'musademba@gmail.com',
+                        'classTeacher' => 'N/A',
+                        'subjects' => [
+                            [
+                                'id' => '2',
+                                'name' => 'Geography'
+                            ],
+                            [
+                                'id' => '3',
+                                'name' => 'History'
+                            ]
+                        ]
+                    ],
+                    [
+                        'id' => '3',
+                        'name' => 'Martha',
+                        'surname' => 'Mutseyami',
+                        'email' => 'mutseyami@gmail.com',
+                        'classTeacher' => 'N/A',
+                        'subjects' => [
+                            [
+                                'id' => '4',
+                                'name' => 'Shona'
+                            ],
+                            [
+                                'id' => '5',
+                                'name' => 'Literature'
+                            ],
+                            [
+                                'id' => '6',
+                                'name' => 'English'
+                            ]
+                        ]
+                    ],
+                ]
+            ];
+
+            return Inertia::render('SchoolAdmin/Exam/CreateTeachers', $teachers);
+        })->name('exams.create.teachers');
     }); 
 
     // Teacher Routes
