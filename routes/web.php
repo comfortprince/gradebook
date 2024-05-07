@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function (){
             return Inertia::render('SchoolAdmin/Exam/Index', $exams);
         })->name('exams.index');
 
-        // Show the form for creating a new resource.
+        // Show the form for creating a new exam.
         Route::get('/exams/create', function(){
             return Inertia::render('SchoolAdmin/Exam/Create');
         })->name('exams.create');

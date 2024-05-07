@@ -2,16 +2,17 @@ import { useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import RegisterNewTeacherModal from '../Components/RegisterNewTeacherModal'
+import EditTeacherModal from '../Components/EditTeacherModal'
 
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
-import InputLabel from '@/Components/InputLabel';
-import InputError from '@/Components/InputError';
-import TextInput from '@/Components/TextInput';
-import Modal from '@/Components/Modal';
+import DangerButton from '@/Components/DangerButton';
 
 export default function CreateTeachers({ auth, teachers }) {
-    const [modalState, setModalState] = useState(false)
+    const [teacherRegistrationModalState, setTeacherRegistrationModalState] = useState(false)
+    const [teacherEditModalState, setTeacherEditModalState] = useState(false)
+    const [teacherToBeEdited, setTeacherToBeEdited] = useState(null)
 
     return (
       <AuthenticatedLayout
@@ -19,13 +20,13 @@ export default function CreateTeachers({ auth, teachers }) {
       >
         <Head title="Admin Dashboard" />
 
-        <div className="text-gray-900 overflow-hidden rounded mt-6 h-full">
+        <div className="text-gray-900 rounded mt-6 h-full">
           <div className="flex justify-between mt-4">
             <h2 className="text-2xl font-medium">
               Verify Teachers
             </h2>
             <div>
-              <PrimaryButton onClick={() => {setModalState(true)}}>
+              <PrimaryButton onClick={() => {setTeacherRegistrationModalState(true)}}>
                   New
               </PrimaryButton>
             </div>
@@ -82,6 +83,19 @@ export default function CreateTeachers({ auth, teachers }) {
                       </span>
                     ))}
                   </td>
+                  <td>
+                    <SecondaryButton
+                      onClick={() => { 
+                        setTeacherToBeEdited(teacher) 
+                        setTeacherEditModalState(true) 
+                      }}
+                    >
+                      Edit
+                    </SecondaryButton>
+                    <DangerButton className="ml-1">
+                      Delete
+                    </DangerButton>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -107,72 +121,18 @@ export default function CreateTeachers({ auth, teachers }) {
           </div>       
         </div>
 
-        <Modal 
-          show={modalState} 
-          onClose={() => {setModalState(false)}}
-        >
-          <div className="p-6">
-            <h2 className="text-2xl font-medium mb-4">
-              Register New Teacher
-            </h2>
-            <form>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+        <RegisterNewTeacherModal 
+          show={teacherRegistrationModalState}
+          onClose={() => {setTeacherRegistrationModalState(false)}}
+        />
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        required
-                    />
-
-                    {/*<InputError message={errors.name} className="mt-2" />*/}
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="surname" value="Surname" />
-
-                    <TextInput
-                        id="surname"
-                        name="surname"
-                        // value={data.surname}
-                        className="mt-1 block w-full"
-                        autoComplete="surname"
-                        isFocused={true}
-                        // onChange={(e) => setData('surname', e.target.value)}
-                        required
-                    />
-
-                    {/*<InputError message={errors.surname} className="mt-2" />*/}
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        // value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        // onChange={(e) => setData('email', e.target.value)}
-                        required
-                    />
-
-                    {/*<InputError message={errors.email} className="mt-2" />*/}
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4">
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
-          </div>
-        </Modal>
+        {teacherEditModalState &&
+          <EditTeacherModal 
+            show={teacherEditModalState}
+            onClose={() => {setTeacherEditModalState(false)}}
+            teacher={teacherToBeEdited}
+          />
+        }
       </AuthenticatedLayout>
     );
 }
