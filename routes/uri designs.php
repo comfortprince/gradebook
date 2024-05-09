@@ -1,6 +1,6 @@
 <?php
 
-public function FunctionName($value='')
+public function FunctionName()
 {
     // Program Entities
     // Schools, Classes, Subjects, Teachers, Students, Exams
@@ -29,18 +29,18 @@ public function FunctionName($value='')
     '{ADMIN}/reports/{id}';
 
     // Teacher URIs
-    'Teacher = gradebook.com/schools/{id}/teacher'
+    'TEACHER = gradebook.com/schools/{id}/teacher'
 
     '{TEACHER}';
     '{TEACHER}/exams';                                // Exam Listing 
     '{TEACHER}/exams/{id}';                           // GET, PUT/PATCH, DELETE
 
     '{TEACHER}/my-classes';
-    '{TEACHER}/my-classes/{id}';
+    '{TEACHER}/my-classes/{my-class-id}';
     '{TEACHER}/subjects';
-    '{TEACHER}/subjects/{id}';
+    '{TEACHER}/subjects/{my-subject-id}';
     '{TEACHER}/students';
-    '{TEACHER}/students/{id}';
+    '{TEACHER}/students/{my-student-id}';
     '{TEACHER}/reports';
-    '{TEACHER}/reports/{id}';
+    '{TEACHER}/reports/{my-reports-id}';
 }
